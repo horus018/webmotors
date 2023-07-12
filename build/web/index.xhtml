@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Busca de Veículos</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h2>Busque seu veículo:</h2>
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Marca:"/>
+                <p:selectOneMenu value="#{buscaBean.marcaSelecionada}"
+                                 converter="#{marcaConverter}">
+                    <f:selectItems value="#{aplicacao.itensMarca}"/>
+                    <p:ajax event="change" immediate="true" update="cbModelos"/>
+                </p:selectOneMenu>
+                <p:outputLabel value="Modelo"/>
+                <p:selectOneMenu id="cbModelos"
+                                 value="#{buscaBean.modeloSelecionado}"
+                                 converter="#{modeloConverter}">
+                    <f:selectItems value="#{buscaBean.itensModelo}"/>
+                </p:selectOneMenu>
+                
+                <p:outputLabel value="Ano até:"/>
+                <p:inputText value="#{buscaBean.ano}"/>
+                
+                <p:outputLabel value="Valor até:"/>
+                <p:inputText value="#{buscaBean.valor}"/>
+                
+            </p:panelGrid>        
+            <p:commandButton value="Filtrar" action="#{buscaBean.filtrar}" 
+                             update=":resultadoBusca"/>
+        </h:form>
+        <p:dataTable id="resultadoBusca" value="#{buscaBean.veiculosFiltrados}" var="veic">
+            <p:column headerText="Marca">
+                <h:outputText value="#{veic.modelo.marca.descricao}"/>
+            </p:column>                
+            <p:column headerText="Ano">
+                <h:outputText value="#{veic.ano}"/>
+            </p:column>
+        </p:dataTable>
+        
+        <p>
+            Cadastre seu veículo <a href="cadastro.jsf">aqui</a>
+        </p>
+        
+    </h:body>
+</html>

@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Cadastre seu veículo para venda!</title>
+    </h:head>
+    <h:body>
+        <h2>Informe os dados do seu veículo:</h2>
+        <h:form>
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Marca:"/>
+                <p:selectOneMenu value="#{buscaBean.marcaSelecionada}"
+                                 converter="#{marcaConverter}">
+                    <f:selectItems value="#{aplicacao.itensMarca}"/>
+                    <p:ajax event="change" immediate="true" update="cbModelos"/>
+                </p:selectOneMenu>
+                <p:outputLabel value="Modelo"/>
+                <p:selectOneMenu id="cbModelos"
+                                 value="#{cadVeiculo.veiculo.modelo}"
+                                 converter="#{modeloConverter}">
+                    <f:selectItems value="#{buscaBean.itensModelo}"/>
+                </p:selectOneMenu>
+                
+                <p:outputLabel value="Placa:"/>
+                <p:inputText value="#{cadVeiculo.veiculo.placa}"/>
+                
+                <p:outputLabel value="Ano fabricação:"/>
+                <p:inputText value="#{cadVeiculo.veiculo.ano}"/>
+                
+                <p:outputLabel value="Valor:"/>
+                <p:inputText value="#{cadVeiculo.veiculo.valor}"/>
+                
+                <p:outputLabel value="Km:"/>
+                <p:inputText value="#{cadVeiculo.veiculo.km}"/>
+
+                <p:outputLabel value="Cor:"/>
+                <p:inputText value="#{cadVeiculo.veiculo.cor}"/>
+                
+            </p:panelGrid>
+            <p:commandButton value="Confirmar" action="#{cadVeiculo.confirmar}"
+                             ajax="false"/>
+            <br/>
+            <a href="index.jsf">Voltar para a busca</a>
+            <p:growl showDetail="true" showSummary="true"/>
+        </h:form>
+    </h:body>
+</html>

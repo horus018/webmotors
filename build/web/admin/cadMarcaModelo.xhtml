@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="frmMarca">
+            <p:outputLabel value="Marcas: "/>
+            <p:selectOneMenu value="#{aplicacao.marcaSelecionada}"
+                             converter="#{marcaConverter}">
+                <f:selectItems value="#{aplicacao.itensMarca}"/>
+                <p:ajax event="change" update=":frmModelo :msgs"/>
+            </p:selectOneMenu>
+            
+            <p:inputText value="#{aplicacao.nomeMarca}" 
+                         required="true"
+                         requiredMessage="Informe o nome da marca"/>
+            <p:commandButton value="Cadastrar Marca"
+                             action="#{aplicacao.inserirMarca}"
+                             update="frmMarca"/>
+        </h:form>
+        <h:form id="frmModelo">
+            
+            <p:outputLabel value="Novo modelo: "/>
+            <p:inputText value="#{aplicacao.nomeModelo}" required="true"
+                         requiredMessage="Informe o nome do modelo"/>
+            
+            <p:commandButton action="#{aplicacao.inserirModelo}"
+                             value="Cadastrar Modelo"
+                             update="frmModelo"/><br/>
+            
+            <p:dataTable value="#{aplicacao.modelos}" var="m">
+                <p:column headerText="Modelo">
+                    <h:outputText value="#{m.nome}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h:messages id="msgs"/>
+    </h:body>
+</html>
